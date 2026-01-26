@@ -1,0 +1,248 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #f3f4f6;
+}
+
+.login-header {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0;
+}
+
+.login-logo {
+  height: 60px;
+  margin-left: 1.5rem;
+}
+
+.login-main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  width: 100%;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgb(14 30 37 / 0.12);
+}
+
+.login-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #06b6d4;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #06b6d4;
+}
+
+.login-button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.login-submit-button {
+  flex: 1;
+  padding: 0.75rem;
+  font-weight: 700;
+  background: #1e40af;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.login-submit-button:hover:not(:disabled) {
+  background: #1e3a8a;
+}
+
+.login-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-signup-button {
+  flex: 1;
+  padding: 0.75rem;
+  font-weight: 700;
+  background: #059669;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.login-signup-button:hover {
+  background: #047857;
+}
+
+.login-forgot-section {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-forgot-button {
+  color: #1e40af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.login-forgot-button:hover {
+  color: #1e3a8a;
+}
+
+.login-message {
+  margin-top: 1rem;
+  color: #dc2626;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.login-success-message {
+  margin-top: 0.5rem;
+  color: #16a34a;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 640px) {
+  .login-logo {
+    height: 48px;
+    margin-left: 1rem;
+  }
+
+  .login-main {
+    padding: 2rem 1rem;
+  }
+
+  .login-form-container {
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+  }
+
+  .login-title {
+    font-size: 20px;
+    margin-bottom: 1.25rem;
+  }
+
+  .login-input {
+    padding: 0.625rem;
+    font-size: 0.95rem;
+  }
+
+  .login-button-group {
+    gap: 8px;
+  }
+
+  .login-submit-button,
+  .login-signup-button {
+    padding: 0.625rem;
+    font-size: 15px;
+  }
+
+  .login-forgot-button {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-logo {
+    height: 40px;
+    margin-left: 0.75rem;
+  }
+
+  .login-main {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .login-form-container {
+    padding: 1.25rem;
+  }
+
+  .login-title {
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+
+  .login-input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .login-button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .login-submit-button,
+  .login-signup-button {
+    width: 100%;
+    padding: 0.625rem;
+    font-size: 14px;
+  }
+
+  .login-forgot-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .login-message,
+  .login-success-message {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-form-container {
+    padding: 1rem;
+  }
+
+  .login-title {
+    font-size: 16px;
+  }
+
+  .login-input {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
