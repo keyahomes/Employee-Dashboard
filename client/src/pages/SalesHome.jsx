@@ -286,14 +286,6 @@ function SalesHome() {
                                                 </a>
                                             </div>
 
-                                            {/* Task List */}
-                                            {/* <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.Task_List} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                    Task List
-                                                </a>
-                                            </div> */}
-
                                             {/* Training Video */}
                                             <div style={styles.file}>
                                                 <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
@@ -374,7 +366,7 @@ function SalesHome() {
                                 {/*Holiday List Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Holiday List - 2026
                                         </a>
                                     </div>
@@ -383,7 +375,7 @@ function SalesHome() {
                                 {/*Employment Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Employment Policy
                                         </a>
                                     </div>
@@ -392,7 +384,7 @@ function SalesHome() {
                                 {/*Dress Code Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Dress Code
                                         </a>
                                     </div>
@@ -401,7 +393,7 @@ function SalesHome() {
                                 {/*Insurance Details Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Insurance Details
                                         </a>
                                     </div>
@@ -410,7 +402,7 @@ function SalesHome() {
                                 {/*Usage of Phone Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Usage of Phone
                                         </a>
                                     </div>
@@ -419,7 +411,7 @@ function SalesHome() {
                                 {/*Keya Update */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Keya Update
                                         </a>
                                     </div>
