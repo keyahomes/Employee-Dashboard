@@ -374,7 +374,7 @@ function OfficeHome() {
                                 {/*Holiday List Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Holiday List - 2026
                                         </a>
                                     </div>
@@ -383,7 +383,7 @@ function OfficeHome() {
                                 {/*Employment Policy Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Employment Policy
                                         </a>
                                     </div>
@@ -392,7 +392,7 @@ function OfficeHome() {
                                 {/*Dress Code Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                             Dress Code
                                         </a>
                                     </div>
@@ -401,7 +401,7 @@ function OfficeHome() {
                                 {/*Insurance Details Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                             Insurance Details
                                         </a>
                                     </div>
@@ -410,7 +410,7 @@ function OfficeHome() {
                                 {/*Usage of Phone Card */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                             Usage of Phone
                                         </a>
                                     </div>
@@ -419,7 +419,7 @@ function OfficeHome() {
                                 {/*Keya Update */}
                                 <div style={styles.cards}>
                                     <div style={styles.titleCard}>
-                                        <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" >
+                                        <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                             Keya Update
                                         </a>
                                     </div>
