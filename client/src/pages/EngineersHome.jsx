@@ -212,7 +212,7 @@ function EngineersHome() {
                                 <div style={styles.tableWrapper} className="mobile-responsive-table">
                                     <table style={styles.table}>
                                         <tbody>
-                                            {summaryRow(1, "DO", userData?.DOJ)}
+                                            {summaryRow(1, "DOJ", userData?.DOJ)}
                                             {summaryRow(2, "AGE", userData?.Age)}
                                             {summaryRow(3, "NAME", userData?.Employee_Name)}
                                             {summaryRow(4, "GENDER", userData?.Gender)}
