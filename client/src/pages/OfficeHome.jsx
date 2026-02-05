@@ -71,6 +71,10 @@ function OfficeHome() {
     const [error, setError] = useState("");
     const [profileImage, setProfileImage] = useState(null);
     const [showLogout, setShowLogout] = useState(false);
+    const [showPayslipModal, setShowPayslipModal] = useState(false);
+    const [selectedMonth, setSelectedMonth] = useState("");
+    const [selectedYear, setSelectedYear] = useState("");
+
 
     let birthdays = [];
 
@@ -88,6 +92,69 @@ function OfficeHome() {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "/";
+    };
+
+    const handlePayslipClick = () => {
+        setShowPayslipModal(true);
+        setSelectedMonth("");
+        setSelectedYear("");
+    };
+
+
+    // const empId = localStorage.getItem("empId");
+    // const siteId = localStorage.getItem("siteId");
+
+
+    // payslip generation
+    const generatePayslip = async () => {
+        const empId = localStorage.getItem("empId");
+        const siteId = localStorage.getItem("siteId");
+        if (!selectedMonth || !selectedYear) {
+            alert("Please select month and year");
+            return;
+        }
+
+        try {
+            const res = await fetch("http://localhost:5000/api/payslip", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    site: siteId,
+                    empId: empId,
+                    month: selectedMonth,
+                    year: selectedYear
+                })
+            });
+
+            if (!res.ok) {
+                alert("Payslip not found");
+                return;
+            }
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            // FORCE DOWNLOAD
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Payslip: ${selectedMonth}-${selectedYear}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+        } catch (err) {
+            console.error(err);
+            alert("Backend not running");
+        }
+    };
+
+
+
+
+    const closeModal = () => {
+        setShowPayslipModal(false);
     };
 
     useEffect(() => {
@@ -139,325 +206,379 @@ function OfficeHome() {
 
 
     return (
-        <div style={styles.homeContainer}>
+        <>
+            <div style={styles.homeContainer}>
 
-            {/*Topbar*/}
-            <div id='topbar' style={styles.topbar}>
-                <div style={styles.topbarContainer1} className="mobile-responsive-width">
+                {/*Topbar*/}
+                <div id='topbar' style={styles.topbar}>
+                    <div style={styles.topbarContainer1} className="mobile-responsive-width">
 
-                    {/*Keya Logo */}
-                    <div style={styles.topbarContainer2}>
-                        <img
-                            src="https://keyahomes.co.in/forms/static/media/keya_homes_logo.ae8e4b7c7c37a705231c.webp"
-                            alt="Keya Homes"
-                            height="50px"
-                            className='logo'
-                        />
-                    </div>
+                        {/*Keya Logo */}
+                        <div style={styles.topbarContainer2}>
+                            <img
+                                src="https://keyahomes.co.in/forms/static/media/keya_homes_logo.ae8e4b7c7c37a705231c.webp"
+                                alt="Keya Homes"
+                                height="50px"
+                                className='logo'
+                            />
+                        </div>
 
-                    {/* User profile & Logout */}
-                    <div style={styles.headerProfile}>
-                        <div
-                            style={styles.headerAvatar}
-                            onClick={() => setShowLogout((prev) => !prev)}
-                        >
-                            {profileImage ? (
-                                <img
-                                    src="{profileImage}"
-                                    alt="Profile"
-                                    style={{
-                                        width: "40px",
-                                        height: "40px",
-                                        borderRadius: "50%",
-                                        objectFit: "cover",
-                                        cursor: "pointer"
-                                    }}
-                                />
-                            ) : (
-                                <div style={styles.headerAvatarFallback} className="mobile-responsive-avatar">
-                                    {userData?.Employee_Name?.charAt(0).toUpperCase() || "U"}
+                        {/* User profile & Logout */}
+                        <div style={styles.headerProfile}>
+                            <div
+                                style={styles.headerAvatar}
+                                onClick={() => setShowLogout((prev) => !prev)}
+                            >
+                                {profileImage ? (
+                                    <img
+                                        src={profileImage}
+                                        alt="Profile"
+                                        style={{
+                                            width: "40px",
+                                            height: "40px",
+                                            borderRadius: "50%",
+                                            objectFit: "cover",
+                                            cursor: "pointer"
+                                        }}
+                                    />
+                                ) : (
+                                    <div style={styles.headerAvatarFallback} className="mobile-responsive-avatar">
+                                        {userData?.Employee_Name?.charAt(0).toUpperCase() || "U"}
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{ fontSize: "18px", fontWeight: 500, color: "#000000", width: "100px" }} className="mobile-responsive-hello">
+                                Hello, {userData?.Employee_Name?.split(" ")[0] || "User"}
+                            </div>
+
+                            {/* Dropdown */}
+                            {showLogout && (
+                                <div style={styles.logoutDropdown}>
+                                    <div style={styles.logoutItem} onClick={handleLogout}>
+                                        LOGOUT
+                                    </div>
                                 </div>
                             )}
-                        </div>
-                        <div style={{ fontSize: "18px", fontWeight: 500, color: "#000000", width: "100px" }} className="mobile-responsive-hello">
-                            Hello, {userData?.Employee_Name?.split(" ")[0] || "User"}
-                        </div>
 
-                        {/* Dropdown */}
-                        {showLogout && (
-                            <div style={styles.logoutDropdown}>
-                                <div style={styles.logoutItem} onClick={handleLogout}>
-                                    LOGOUT
-                                </div>
-                            </div>
-                        )}
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div style={styles.bodyContainerMain} className="mobile-responsive-grid">
-                {/*Body Container - left*/}
-                <div style={styles.bodyContainer}>
-
-                    <div style={styles.bodyCol1}>
-
-                        {/*Employee Basic Details */}
-                        <div style={styles.empDetails}>
-                            <div style={styles.cardTitle}>
-                                Employee Basic Details
-                            </div>
-                            <div style={styles.cardBody}>
-                                <div style={styles.tableWrapper} className="mobile-responsive-table">
-                                    <table style={styles.table}>
-                                        <tbody>
-                                            {summaryRow(1, "DOJ", userData?.DOJ)}
-                                            {summaryRow(2, "AGE", userData?.Age)}
-                                            {summaryRow(3, "NAME", userData?.Employee_Name)}
-                                            {summaryRow(4, "GENDER", userData?.Gender)}
-                                            {summaryRow(5, "DEPARTMENT", userData?.Department)}
-                                            {summaryRow(6, "REPORTING MANAGER", userData?.Reporting_Manager)}
-                                            {summaryRow(7, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
-                                            {summaryRow(8, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
-                                            {summaryRow(9, "BLOOD GROUP", userData?.Blood_Group)}
-                                            {summaryRow(10, "PERMANENT ADDRESS", userData?.Permanent_Address)}
-                                            {summaryRow(11, "CURRENT ADDRESS", userData?.Current_Address)}
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/*Leave Details */}
-                        <div style={styles.empDetails}>
-                            <div style={styles.cardTitle}>
-                                Leave Details
-                            </div>
-                            <div style={styles.cardBody}>
-                                <div style={styles.tableWrapper} className="mobile-responsive-table">
-                                    <table style={styles.table}>
-                                        <tbody>
-                                            {summaryRow(1, "LEAVE AVAILABLE", userData?.Available_Leave)}
-                                            {summaryRow(2, "AVAILED LEAVE", userData?.Availed_Leave)}
-                                            {summaryRow(3, "BALANCE AVAILABLE LEAVE", userData?.Balance_Available_Leave)}
-                                            {summaryRow(4, "LEAVE REQUEST FORM", userData?.Leave_Request_Form)}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
                 </div>
 
-                {/* Body Container - Right */}
-                <div style={styles.bodyContainer1}>
-
-                    {/* Right Top */}
+                <div style={styles.bodyContainerMain} className="mobile-responsive-grid">
+                    {/*Body Container - left*/}
                     <div style={styles.bodyContainer}>
 
-                        <div style={styles.bodyContainer2} className="mobile-responsive-flex">
+                        <div style={styles.bodyCol1}>
 
-                            {/* Middle Column */}
-                            <div style={styles.bodyCol1}>
+                            {/*Employee Basic Details */}
+                            <div style={styles.empDetails}>
+                                <div style={styles.cardTitle}>
+                                    Employee Basic Details
+                                </div>
+                                <div style={styles.cardBody}>
+                                    <div style={styles.tableWrapper} className="mobile-responsive-table">
+                                        <table style={styles.table}>
+                                            <tbody>
+                                                {summaryRow(1, "DOJ", userData?.DOJ)}
+                                                {summaryRow(2, "AGE", userData?.Age)}
+                                                {summaryRow(3, "NAME", userData?.Employee_Name)}
+                                                {summaryRow(4, "GENDER", userData?.Gender)}
+                                                {summaryRow(5, "DEPARTMENT", userData?.Department)}
+                                                {summaryRow(6, "REPORTING MANAGER", userData?.Reporting_Manager)}
+                                                {summaryRow(7, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
+                                                {summaryRow(8, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
+                                                {summaryRow(9, "BLOOD GROUP", userData?.Blood_Group)}
+                                                {summaryRow(10, "PERMANENT ADDRESS", userData?.Permanent_Address)}
+                                                {summaryRow(11, "CURRENT ADDRESS", userData?.Current_Address)}
 
-                                {/*Learning and Development Details */}
-                                <div style={styles.cardMain1}>
-                                    <div style={styles.cardTitle1}>
-                                        Learning and Development
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div style={styles.cardBody}>
-                                        <div style={styles.titleCard1}>
-                                            {/* FAQ  */}
-                                            <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.FAQ} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                    FAQ
-                                                </a>
-                                            </div>
+                                </div>
+                            </div>
 
-                                            {/* SOP's */}
-                                            <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.SOPs} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                    SOP's
-                                                </a>
-                                            </div>
+                            {/*Leave Details */}
+                            <div style={styles.empDetails}>
+                                <div style={styles.cardTitle}>
+                                    Leave Details
+                                </div>
+                                <div style={styles.cardBody}>
+                                    <div style={styles.tableWrapper} className="mobile-responsive-table">
+                                        <table style={styles.table}>
+                                            <tbody>
+                                                {summaryRow(1, "LEAVE AVAILABLE", userData?.Available_Leave)}
+                                                {summaryRow(2, "AVAILED LEAVE", userData?.Availed_Leave)}
+                                                {summaryRow(3, "BALANCE AVAILABLE LEAVE", userData?.Balance_Available_Leave)}
+                                                {summaryRow(4, "LEAVE REQUEST FORM", userData?.Leave_Request_Form)}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
-                                            {/* Task List */}
-                                            {/* <div style={styles.file}>
+                        </div>
+                    </div>
+
+                    {/* Body Container - Right */}
+                    <div style={styles.bodyContainer1}>
+
+                        {/* Right Top */}
+                        <div style={styles.bodyContainer}>
+
+                            <div style={styles.bodyContainer2} className="mobile-responsive-flex">
+
+                                {/* Middle Column */}
+                                <div style={styles.bodyCol1}>
+
+                                    {/*Learning and Development Details */}
+                                    <div style={styles.cardMain1}>
+                                        <div style={styles.cardTitle1}>
+                                            Learning and Development
+                                        </div>
+                                        <div style={styles.cardBody}>
+                                            <div style={styles.titleCard1}>
+
+                                                {/* FAQ  */}
+                                                <div style={styles.file}>
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <a href={userData.FAQ} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                        FAQ
+                                                    </a>
+                                                </div>
+
+                                                {/* SOP's */}
+                                                <div style={styles.file}>
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <a href={userData.SOPs} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                        SOP's
+                                                    </a>
+                                                </div>
+
+                                                {/* Task List */}
+                                                {/* <div style={styles.file}>
                                                 <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
                                                 <a href={userData.Task_List} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                     Task List
                                                 </a>
                                             </div> */}
 
-                                            {/* Training Video */}
-                                            <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.Training_Videos} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
-                                                    Training Video
-                                                </a>
-                                            </div>
+                                                {/* Training Video */}
+                                                <div style={styles.file}>
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <a href={userData.Training_Videos} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
+                                                        Training Video
+                                                    </a>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                {/*Task List */}
-                                <div style={styles.cardMain1}>
-                                    <div style={styles.cardTitle1}>
-                                        Task List
+                                    {/*Task List */}
+                                    <div style={styles.cardMain1}>
+                                        <div style={styles.cardTitle1}>
+                                            Task List
+                                        </div>
+                                        <div style={styles.cardBody}>
+                                            <div style={styles.titleCard1}>
+
+                                                {/* General Task */}
+                                                <div style={styles.file}>
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <a href={userData.General_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                        GENERAL TASK
+                                                    </a>
+                                                </div>
+
+                                                {/* Department Task */}
+                                                <div style={styles.file}>
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <a href={userData.Department_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                        DEPARTMENT TASK
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style={styles.cardBody}>
+
+                                    {/*Application Cards */}
+                                    <div style={styles.cardMain1}>
                                         <div style={styles.titleCard1}>
 
-                                            {/* General Task */}
+                                            {/* Form 16 */}
                                             <div style={styles.file}>
                                                 <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.General_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                        GENERAL TASK
+                                                <a href={userData.Form_16} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
+                                                    Apply for Form16
                                                 </a>
                                             </div>
 
-                                            {/* Department Task */}
+                                            {/* Payslip Card */}
+                                            <div
+                                                style={styles.file}
+                                                onClick={handlePayslipClick}
+                                            >
+                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                <span>Apply for Payslip</span>
+                                            </div>
+
+                                            {/* Employment letter */}
                                             <div style={styles.file}>
                                                 <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.Department_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                    DEPARTMENT TASK
+                                                <a href={userData.Employment_Letter} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
+                                                    Employment Letter
                                                 </a>
                                             </div>
 
                                         </div>
                                     </div>
+
+
                                 </div>
 
-                                {/*Application Cards */}
-                                <div style={styles.cardMain1}>
-                                    <div style={styles.titleCard1}>
+                                {/*Right Column - Links card */}
+                                <div style={styles.bodyCol1}>
 
-                                        {/* Form 16 */}
-                                        <div style={styles.file}>
-                                            <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                            <a href={userData.Form_16} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
-                                                Apply for Form16
+                                    {/*Holiday List Card */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Holiday List - 2026
                                             </a>
                                         </div>
+                                    </div>
 
-                                        {/* Payslip */}
-                                        <div style={styles.file}>
-                                            <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                            <a href={userData.Payslip} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                Apply for Payslip
+                                    {/*Employment Policy Card */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Employment Policy
                                             </a>
                                         </div>
+                                    </div>
 
-                                        {/* Employment letter */}
-                                        <div style={styles.file}>
-                                            <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                            <a href={userData.Employment_Letter} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
-                                                Employment Letter
+                                    {/*Dress Code Card */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Dress Code
                                             </a>
                                         </div>
-
                                     </div>
-                                </div>
 
-
-                            </div>
-
-                            {/*Right Column - Links card */}
-                            <div style={styles.bodyCol1}>
-
-                                {/*Holiday List Card */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Holiday List - 2026
-                                        </a>
+                                    {/*Insurance Details Card */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Insurance Details
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/*Employment Policy Card */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Employment Policy
-                                        </a>
+                                    {/*Usage of Phone Card */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Usage of Phone
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/*Dress Code Card */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Dress Code
-                                        </a>
+                                    {/*Keya Update */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                Keya Update
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/*Insurance Details Card */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Insurance Details
-                                        </a>
-                                    </div>
                                 </div>
-
-                                {/*Usage of Phone Card */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Usage of Phone
-                                        </a>
-                                    </div>
-                                </div>
-
-                                {/*Keya Update */}
-                                <div style={styles.cards}>
-                                    <div style={styles.titleCard}>
-                                        <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                            Keya Update
-                                        </a>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-                    </div>
 
-                    {/* Birthday  */}
-                    <div style={styles.empDetails3}>
-                        <div style={styles.cardTitle}>
-                            Current Month Birthdays
+                        {/* Birthday  */}
+                        <div style={styles.empDetails3}>
+                            <div style={styles.cardTitle}>
+                                Current Month Birthdays
+                            </div>
+                            <div style={styles.cardBody}>
+                                {birthdays.length === 0 ? (
+                                    <div style={styles.noBirthdayText}>
+                                        Keya has no birthdays this month
+                                    </div>
+                                ) : (
+                                    <div style={styles.tableWrapperBirthday} className="mobile-responsive-table">
+                                        <table style={styles.tableBirthday}>
+                                            <tbody>
+                                                {tableHeaderRow()}
+
+                                                {birthdays.map((item, idx) =>
+                                                    birthdayRow(idx + 1, item)
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                        <div style={styles.cardBody}>
-                            {birthdays.length === 0 ? (
-                                <div style={styles.noBirthdayText}>
-                                    Keya has no birthdays this month
-                                </div>
-                            ) : (
-                                <div style={styles.tableWrapperBirthday} className="mobile-responsive-table">
-                                    <table style={styles.tableBirthday}>
-                                        <tbody>
-                                            {tableHeaderRow()}
 
-                                            {birthdays.map((item, idx) =>
-                                                birthdayRow(idx + 1, item)
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                        </div>
                     </div>
-
                 </div>
+
+
             </div>
-        </div>
+
+            {/* Payslip Modal */}
+            {showPayslipModal && (
+                <div style={styles.modalOverlay} onClick={closeModal}>
+                    <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                        <div style={styles.modalHeader}>
+                            <h3 style={styles.modalTitle}>Apply for Payslip</h3>
+                            <button style={styles.closeButton} onClick={closeModal}>
+                                &times;
+                            </button>
+                        </div>
+                        <div style={styles.modalBody}>
+                            <div style={styles.formGroup}>
+                                <label style={styles.formLabel}>Month</label>
+                                <select
+                                    style={styles.formSelect}
+                                    value={selectedMonth}
+                                    onChange={(e) => setSelectedMonth(e.target.value)}
+                                >
+                                    <option value="">Select Month</option>
+                                    {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
+                                        <option key={month} value={month}>
+                                            {new Date(2024, month - 1).toLocaleString('default', { month: 'long' })}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div style={styles.formGroup}>
+                                <label style={styles.formLabel}>Year</label>
+                                <select
+                                    style={styles.formSelect}
+                                    value={selectedYear}
+                                    onChange={(e) => setSelectedYear(e.target.value)}
+                                >
+                                    <option value="">Select Year</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style={styles.modalFooter}>
+                            <button style={styles.generateButton} onClick={generatePayslip}>
+                                Generate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
@@ -701,10 +822,10 @@ const styles = {
         alignItems: "flex-start",
         gap: "6px",
         color: "#000000",
-        paddingBottom: "7px",
         fontWeight: "500",
-        TextDecoder: "none",
+        textDecoration: "none",
         width: "100%",
+        cursor: "pointer",
     },
 
     cardTitle: {
@@ -795,11 +916,159 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         margin: "12px",
+        gap: "10px",
         // backgroundColor: "#0c5bef1a",
         // width: "90%",
         // borderRadius: "10px"
     },
 
+    payslipCard: {
+        display: "flex",
+        alignItems: "flex-start",
+        gap: "6px",
+        color: "#000000",
+        paddingBottom: "7px",
+        fontWeight: "500",
+        textDecoration: "none",
+        cursor: "pointer",
+        width: "100%",
+        padding: "8px",
+        borderRadius: "8px",
+        backgroundColor: "#e3f2fd",
+        border: "1px solid #bbdefb",
+        transition: "all 0.3s ease",
+    },
+
+    payslipCardHover: {
+        backgroundColor: "#bbdefb",
+        transform: "translateY(-2px)",
+        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    },
+
+    // Modal Styles
+    modalOverlay: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+        padding: "20px",
+    },
+
+    modalContent: {
+        backgroundColor: "#fff",
+        borderRadius: "16px",
+        width: "100%",
+        maxWidth: "400px",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+        display: "flex",
+        flexDirection: "column",
+    },
+
+    modalHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "16px 20px",
+        borderBottom: "1px solid #e0e0e0",
+        backgroundColor: "#f8f9ff",
+        borderRadius: "16px 16px 0 0",
+    },
+
+    modalTitle: {
+        margin: 0,
+        fontSize: "18px",
+        fontWeight: "700",
+        color: "#000000",
+        textTransform: "uppercase",
+    },
+
+    closeButton: {
+        background: "none",
+        border: "none",
+        fontSize: "24px",
+        color: "#666",
+        cursor: "pointer",
+        padding: "0",
+        width: "30px",
+        height: "30px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "50%",
+        transition: "background-color 0.2s ease",
+    },
+
+    closeButtonHover: {
+        backgroundColor: "#f0f0f0",
+    },
+
+    modalBody: {
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+    },
+
+    formGroup: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+    },
+
+    formLabel: {
+        fontSize: "14px",
+        fontWeight: "600",
+        color: "#333",
+    },
+
+    formSelect: {
+        padding: "10px 12px",
+        border: "1px solid #d6d6d6ff",
+        borderRadius: "8px",
+        fontSize: "14px",
+        backgroundColor: "#fff",
+        outline: "none",
+        transition: "border-color 0.2s ease",
+    },
+
+    formSelectFocus: {
+        borderColor: "#286be898",
+        boxShadow: "0 0 0 3px rgba(40, 107, 232, 0.1)",
+    },
+
+    modalFooter: {
+        padding: "16px 20px 20px 20px",
+        display: "flex",
+        justifyContent: "flex-end",
+        borderTop: "1px solid #e0e0e0",
+        backgroundColor: "#f8f9ff",
+        borderRadius: "0 0 16px 16px",
+    },
+
+    generateButton: {
+        backgroundColor: "#286be898",
+        color: "#fff",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "8px",
+        fontSize: "14px",
+        fontWeight: "600",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        textTransform: "uppercase",
+    },
+
+    generateButtonHover: {
+        backgroundColor: "#286be8",
+        transform: "translateY(-1px)",
+        boxShadow: "0 4px 12px rgba(40, 107, 232, 0.3)",
+    },
 };
 
 
@@ -887,6 +1156,5 @@ const tableHeaderRow = () => (
     </tr>
 );
 
-
-
 export default OfficeHome;
+
