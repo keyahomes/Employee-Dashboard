@@ -291,6 +291,11 @@ function OfficeHome() {
                                                 {summaryRow(9, "BLOOD GROUP", userData?.Blood_Group)}
                                                 {summaryRow(10, "PERMANENT ADDRESS", userData?.Permanent_Address)}
                                                 {summaryRow(11, "CURRENT ADDRESS", userData?.Current_Address)}
+                                                {summaryRow(12, "PF NUMBER", userData?.PF_Number)}
+                                                {summaryRow(13, "UAN NUMBER", userData?.UAN_Number)}
+                                                {summaryRow(14, "BANK NAME", userData?.Bank_Name)}
+                                                {summaryRow(15, "IFSC CODE", userData?.IFSC_Code)}
+                                                {summaryRow(16, "ACCOUNT NUMBER", userData?.Account_Number)}
 
                                             </tbody>
                                         </table>
@@ -807,7 +812,7 @@ const styles = {
 
     noBirthdayText: {
         textAlign: "center",
-        fontSize: "14px",
+        fontSize: "12px",
         color: "#555",
         fontStyle: "italic",
         display: "flex",
@@ -834,7 +839,7 @@ const styles = {
         borderRadius: "20px 20px 0 0",
         padding: "8px",
         textAlign: "center",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "700",
         textTransform: "Uppercase",
         backdropFilter: "blur(5px)",
@@ -843,7 +848,7 @@ const styles = {
 
     cardBody: {
         display: "flex",
-        fontSize: "14px",
+        fontSize: "12px",
         padding: "10px 14px",
         justifyContent: "center",
     },
@@ -856,7 +861,7 @@ const styles = {
         padding: "8px",
         // border: "1px solid black",
         textAlign: "center",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "700",
         textTransform: "Uppercase",
         backdropFilter: "blur(5px)",
@@ -905,13 +910,13 @@ const styles = {
     },
 
     titleCard: {
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "600",
         textTransform: "Uppercase",
     },
 
     titleCard1: {
-        fontSize: "14px",
+        fontSize: "12px",
         textTransform: "Uppercase",
         display: "flex",
         flexDirection: "column",
@@ -982,7 +987,7 @@ const styles = {
 
     modalTitle: {
         margin: 0,
-        fontSize: "18px",
+        fontSize: "16px",
         fontWeight: "700",
         color: "#000000",
         textTransform: "uppercase",
@@ -1022,7 +1027,7 @@ const styles = {
     },
 
     formLabel: {
-        fontSize: "14px",
+        fontSize: "12px",
         fontWeight: "600",
         color: "#333",
     },
@@ -1031,7 +1036,7 @@ const styles = {
         padding: "10px 12px",
         border: "1px solid #d6d6d6ff",
         borderRadius: "8px",
-        fontSize: "14px",
+        fontSize: "12px",
         backgroundColor: "#fff",
         outline: "none",
         transition: "border-color 0.2s ease",
@@ -1057,7 +1062,7 @@ const styles = {
         border: "none",
         padding: "10px 20px",
         borderRadius: "8px",
-        fontSize: "14px",
+        fontSize: "12px",
         fontWeight: "600",
         cursor: "pointer",
         transition: "all 0.2s ease",
