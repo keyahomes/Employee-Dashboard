@@ -101,10 +101,6 @@ function OfficeHome() {
     };
 
 
-    // const empId = localStorage.getItem("empId");
-    // const siteId = localStorage.getItem("siteId");
-
-
     // payslip generation
     const generatePayslip = async () => {
         const empId = localStorage.getItem("empId");
@@ -149,8 +145,6 @@ function OfficeHome() {
             alert("Backend not running");
         }
     };
-
-
 
 
     const closeModal = () => {
@@ -247,7 +241,7 @@ function OfficeHome() {
                                     </div>
                                 )}
                             </div>
-                            <div style={{ fontSize: "18px", fontWeight: 500, color: "#000000", width: "100px" }} className="mobile-responsive-hello">
+                            <div style={{ fontSize: "14px", fontWeight: 500, color: "#000000", width: "100px" }} className="mobile-responsive-hello">
                                 Hello, {userData?.Employee_Name?.split(" ")[0] || "User"}
                             </div>
 
@@ -281,21 +275,22 @@ function OfficeHome() {
                                         <table style={styles.table}>
                                             <tbody>
                                                 {summaryRow(1, "DOJ", userData?.DOJ)}
-                                                {summaryRow(2, "AGE", userData?.Age)}
-                                                {summaryRow(3, "NAME", userData?.Employee_Name)}
-                                                {summaryRow(4, "GENDER", userData?.Gender)}
-                                                {summaryRow(5, "DEPARTMENT", userData?.Department)}
-                                                {summaryRow(6, "REPORTING MANAGER", userData?.Reporting_Manager)}
-                                                {summaryRow(7, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
-                                                {summaryRow(8, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
-                                                {summaryRow(9, "BLOOD GROUP", userData?.Blood_Group)}
-                                                {summaryRow(10, "PERMANENT ADDRESS", userData?.Permanent_Address)}
-                                                {summaryRow(11, "CURRENT ADDRESS", userData?.Current_Address)}
-                                                {summaryRow(12, "PF NUMBER", userData?.PF_Number)}
-                                                {summaryRow(13, "UAN NUMBER", userData?.UAN_Number)}
-                                                {summaryRow(14, "BANK NAME", userData?.Bank_Name)}
-                                                {summaryRow(15, "IFSC CODE", userData?.IFSC_Code)}
-                                                {summaryRow(16, "ACCOUNT NUMBER", userData?.Account_Number)}
+                                                {summaryRow(2, "DOB", userData?.DOB)}
+                                                {summaryRow(3, "AGE", userData?.Age)}
+                                                {summaryRow(4, "NAME", userData?.Employee_Name)}
+                                                {summaryRow(5, "GENDER", userData?.Gender)}
+                                                {summaryRow(6, "DEPARTMENT", userData?.Department)}
+                                                {summaryRow(7, "REPORTING MANAGER", userData?.Reporting_Manager)}
+                                                {summaryRow(8, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
+                                                {summaryRow(9, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
+                                                {summaryRow(10, "BLOOD GROUP", userData?.Blood_Group)}
+                                                {summaryRow(11, "PERMANENT ADDRESS", userData?.Permanent_Address)}
+                                                {summaryRow(12, "CURRENT ADDRESS", userData?.Current_Address)}
+                                                {summaryRow(13, "PF NUMBER", userData?.PF_Number)}
+                                                {summaryRow(14, "UAN NUMBER", userData?.UAN_Number)}
+                                                {summaryRow(15, "BANK NAME", userData?.Bank_Name)}
+                                                {summaryRow(16, "IFSC CODE", userData?.IFSC_Code)}
+                                                {summaryRow(17, "ACCOUNT NUMBER", userData?.Account_Number)}
 
                                             </tbody>
                                         </table>
@@ -426,7 +421,7 @@ function OfficeHome() {
                                                 onClick={handlePayslipClick}
                                             >
                                                 <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <span>Apply for Payslip</span>
+                                                <span>Generate Payslip</span>
                                             </div>
 
                                             {/* Employment letter */}
@@ -482,6 +477,15 @@ function OfficeHome() {
                                         </div>
                                     </div>
 
+                                    {/*PF Website */}
+                                    <div style={styles.cards}>
+                                        <div style={styles.titleCard}>
+                                            <a href={userData.PF_Website} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                PF Website
+                                            </a>
+                                        </div>
+                                    </div>
+
                                     {/*Usage of Phone Card */}
                                     <div style={styles.cards}>
                                         <div style={styles.titleCard}>
@@ -500,6 +504,8 @@ function OfficeHome() {
                                         </div>
                                     </div>
 
+                                    
+
                                 </div>
                             </div>
                         </div>
@@ -509,7 +515,7 @@ function OfficeHome() {
                             <div style={styles.cardTitle}>
                                 Current Month Birthdays
                             </div>
-                            <div style={styles.cardBody}>
+                            <div style={{...styles.cardBody, justifyContent: "flex-start", alignItems: "flex-start"}}>
                                 {birthdays.length === 0 ? (
                                     <div style={styles.noBirthdayText}>
                                         Keya has no birthdays this month
@@ -541,7 +547,7 @@ function OfficeHome() {
                 <div style={styles.modalOverlay} onClick={closeModal}>
                     <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                         <div style={styles.modalHeader}>
-                            <h3 style={styles.modalTitle}>Apply for Payslip</h3>
+                            <h3 style={styles.modalTitle}>Generate Payslip</h3>
                             <button style={styles.closeButton} onClick={closeModal}>
                                 &times;
                             </button>
@@ -625,13 +631,11 @@ const styles = {
     },
 
     topbarContainer2: {
-        // flex: "0 0 auto",
         width: "1200px",        // col-md-1
         minWidth: "80px",       // prevents logo collapse
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start", // md+
-
     },
 
     headerProfile: {
@@ -709,7 +713,6 @@ const styles = {
         flexDirection: "column",
         gap: "10px",
         height: "100%",
-        // justifyContent: "flex-start"
     },
 
     bodyContainer2: {
@@ -722,6 +725,7 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         gap: "10px",
+        height: "100%",
     },
 
     empDetails: {
@@ -770,21 +774,17 @@ const styles = {
     table: {
         width: "100%",
         borderCollapse: "collapse",
-        // margin: "0px",
         fontFamily: "lato",
         borderRadius: "20px",
     },
 
     th: {
         border: "1px solid #0c4338",
-        // padding: "8px",
-        // backgroundColor: "#f0da95",
         color: "#0c4338",
     },
 
     td: {
-        // border: "1px solid #0c4338",
-        padding: "7px",
+        padding: "5px",
         color: "#000000ff",
     },
 
@@ -803,11 +803,9 @@ const styles = {
     },
 
     tdBirthday: {
-        // border: "1px solid #0c4338",
-        padding: "6px",
+        padding: "4px",
         color: "#000000ff",
         fontWeight: "400",
-        // paddingLeft:"10px",
     },
 
     noBirthdayText: {
@@ -825,7 +823,7 @@ const styles = {
     file: {
         display: "flex",
         alignItems: "flex-start",
-        gap: "6px",
+        gap: "5px",
         color: "#000000",
         fontWeight: "500",
         textDecoration: "none",
@@ -837,20 +835,21 @@ const styles = {
         backgroundColor: "white",
         height: "18px",
         borderRadius: "20px 20px 0 0",
-        padding: "8px",
+        padding: "6px",
         textAlign: "center",
         fontSize: "14px",
         fontWeight: "700",
         textTransform: "Uppercase",
         backdropFilter: "blur(5px)",
-
     },
 
     cardBody: {
         display: "flex",
         fontSize: "12px",
-        padding: "10px 14px",
+        padding: "8px 10px",
         justifyContent: "center",
+        flexGrow: 1,
+        alignItems: "center",
     },
 
     cardTitle1: {
@@ -858,33 +857,32 @@ const styles = {
         height: "18px",
         width: "300px",
         borderRadius: "20px 20px 0 0",
-        padding: "8px",
-        // border: "1px solid black",
+        padding: "6px",
         textAlign: "center",
         fontSize: "14px",
         fontWeight: "700",
         textTransform: "Uppercase",
         backdropFilter: "blur(5px)",
-
     },
 
     cardMain1: {
         borderRadius: "16px",
         border: "1px solid #d6d6d6ff",
-        minHeight: "100px",
+        minHeight: "85px",
         minWidth: "300px",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
         boxShadow: "0 6px 14px rgba(0,0,0,0.06)",
-        backgroundColor: "#f2f4ff"
+        backgroundColor: "#f2f4ff",
+        flexGrow: 1,
     },
 
     cards: {
         borderRadius: "16px",
         border: "1px solid #d6d6d6ff",
-        height: "54px",
+        height: "48px",
         minWidth: "300px",
         justifyContent: "center",
         alignItems: "center",
@@ -904,7 +902,6 @@ const styles = {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
-        // padding: "10px",
         boxShadow: "0 6px 14px rgba(0,0,0,0.06)",
         backgroundColor: "#f2f4ff"
     },
@@ -920,34 +917,10 @@ const styles = {
         textTransform: "Uppercase",
         display: "flex",
         flexDirection: "column",
-        margin: "12px",
-        gap: "10px",
-        // backgroundColor: "#0c5bef1a",
-        // width: "90%",
-        // borderRadius: "10px"
-    },
-
-    payslipCard: {
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "6px",
-        color: "#000000",
-        paddingBottom: "7px",
-        fontWeight: "500",
-        textDecoration: "none",
-        cursor: "pointer",
-        width: "100%",
-        padding: "8px",
-        borderRadius: "8px",
-        backgroundColor: "#e3f2fd",
-        border: "1px solid #bbdefb",
-        transition: "all 0.3s ease",
-    },
-
-    payslipCardHover: {
-        backgroundColor: "#bbdefb",
-        transform: "translateY(-2px)",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+        margin: "8px",
+        gap: "8px",
+        justifyContent: "center",
+        flexGrow: 1,
     },
 
     // Modal Styles
@@ -979,7 +952,7 @@ const styles = {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "16px 20px",
+        padding: "12px 16px",
         borderBottom: "1px solid #e0e0e0",
         backgroundColor: "#f8f9ff",
         borderRadius: "16px 16px 0 0",
@@ -1014,16 +987,16 @@ const styles = {
     },
 
     modalBody: {
-        padding: "20px",
+        padding: "16px",
         display: "flex",
         flexDirection: "column",
-        gap: "16px",
+        gap: "12px",
     },
 
     formGroup: {
         display: "flex",
         flexDirection: "column",
-        gap: "8px",
+        gap: "6px",
     },
 
     formLabel: {
@@ -1033,7 +1006,7 @@ const styles = {
     },
 
     formSelect: {
-        padding: "10px 12px",
+        padding: "8px 10px",
         border: "1px solid #d6d6d6ff",
         borderRadius: "8px",
         fontSize: "12px",
@@ -1048,7 +1021,7 @@ const styles = {
     },
 
     modalFooter: {
-        padding: "16px 20px 20px 20px",
+        padding: "12px 16px 16px 16px",
         display: "flex",
         justifyContent: "flex-end",
         borderTop: "1px solid #e0e0e0",
@@ -1060,7 +1033,7 @@ const styles = {
         backgroundColor: "#286be898",
         color: "#fff",
         border: "none",
-        padding: "10px 20px",
+        padding: "8px 16px",
         borderRadius: "8px",
         fontSize: "12px",
         fontWeight: "600",
@@ -1145,7 +1118,7 @@ const birthdayRow = (index, person) => {
             style={{ backgroundColor: index % 2 === 0 ? "#0c5bef1a" : "#5488e831" }}
         >
             {/* <td style={styles.tdBirthday}>{index}</td> */}
-            <td style={{ ...styles.tdBirthday, paddingLeft: "10px" }}>{person.name}</td>
+            <td style={{ ...styles.tdBirthday, paddingLeft: "8px" }}>{person.name}</td>
             <td style={styles.tdBirthday}>{person.dept}</td>
             <td style={styles.tdBirthday}>{person.birthday}</td>
         </tr>
@@ -1155,7 +1128,7 @@ const birthdayRow = (index, person) => {
 const tableHeaderRow = () => (
     <tr style={{ backgroundColor: "#0c5bef1a" }}>
         {/* <td style={{ ...styles.tdBirthday, fontWeight: "600" }}>#</td> */}
-        <td style={{ ...styles.tdBirthday, fontWeight: "600", paddingLeft: "10px" }}>Name</td>
+        <td style={{ ...styles.tdBirthday, fontWeight: "600", paddingLeft: "8px" }}>Name</td>
         <td style={{ ...styles.tdBirthday, fontWeight: "600" }}>Department</td>
         <td style={{ ...styles.tdBirthday, fontWeight: "600" }}>Birth Date</td>
     </tr>
