@@ -1,416 +1,567 @@
-.home-container {
-    min-height: 100vh;
-    width: 100%;
-    background-image: linear-gradient(135deg, rgba(42, 78, 240, 0.1) 0%, rgba(118, 75, 162, 0.04) 100%), url("");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    overflow-x: hidden;
-    padding-top: 70px;
+/* Sales Home Responsive Styles */
+
+.office-home-container {
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(135deg, rgba(42, 78, 240, 0.1) 0%, rgba(118, 75, 162, 0.04) 100%), url("");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.topbar {
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    padding: 3px;
-    height: 55px;
-    margin-bottom: 20px;
-    z-index: 1000;
+/* Topbar Styles */
+.office-topbar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 3px 10px;
+  height: 55px;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.topbar-container-1 {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.office-topbar-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.topbar-container-2 {
-    width: 1200px;
-    min-width: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+.office-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 80px;
 }
 
-.header-profile {
-    position: relative;
-    margin-right: 60px;
-    display: flex;
-    flex-direction: row;
-    border: 1px solid #286be898;
-    border-radius: 20px;
-    padding: 5px 10px;
-    background-color: #fff;
-    align-items: center;
-    gap: 10px;
+.office-logo {
+  height: 50px;
 }
 
-.header-avatar-fallback {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #0c5bef1a;
-    color: #286be898;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 700;
-    border: 1.5px solid #0c5bef1a;
+.office-header-profile {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #286be898;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: #fff;
+  align-items: center;
+  gap: 10px;
 }
 
-.logout-dropdown {
-    position: absolute;
-    top: 60px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    z-index: 1200;
+.office-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.logout-item {
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: 600;
-    color: #000000;
-    white-space: nowrap;
+.office-header-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.body-container-main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 10px;
-    max-width: 1200px;
-    margin: 20px auto;
-    align-items: stretch;
+.office-header-avatar-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0c5bef1a;
+  color: #286be898;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  border: 1.5px solid #0c5bef1a;
 }
 
-.body-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    height: 100%;
+.office-user-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  width: 100px;
+  white-space: nowrap;
 }
 
-.body-container-1 {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 100%;
+.office-logout-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1200;
 }
 
-.body-container-2 {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+.office-logout-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000000;
+  white-space: nowrap;
 }
 
-.body-col-1 {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.office-logout-item:hover {
+  background-color: #f5f5f5;
 }
 
-.emp-details {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #d6d6d6ff;
-    border-radius: 20px;
-    height: 100%;
-    width: 100%;
-    box-shadow: 0 8px 18px rgba(228, 182, 255, 0.08);
-    background-color: #f4f6ff;
-    flex-grow: 1;
+/* Body Container */
+.office-body-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 15px auto;
+  /* padding: 0 10px; */
+  align-items: start;
 }
 
-.emp-details-3 {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #d6d6d6ff;
-    border-radius: 20px;
-    height: 100%;
-    width: 100%;
-    box-shadow: 0 8px 18px rgba(228, 182, 255, 0.08);
-    background-color: #f4f6ff;
-    flex-grow: 1;
+.office-body-main {
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
 }
 
-.table-wrapper {
-    overflow: hidden;
-    border-radius: 10px;
-    width: 100%;
+
+.office-body-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: lato;
-    border-radius: 20px;
+.office-body-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
 }
 
-.td {
-    padding: 7px;
-    color: #000000ff;
+.office-body-right-top {
+  display: flex;
+  gap: 10px;
 }
 
-.table-wrapper-birthday {
-    overflow: hidden;
-    border-radius: 10px;
-    width: 100%;
+.office-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 }
 
-.table-birthday {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: lato;
-    border-radius: 20px;
-    height: 100%;
+/* Card Styles */
+.office-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d6d6d6ff;
+  border-radius: 20px;
+  width: 100%;
+  box-shadow: 0 8px 18px rgba(228, 182, 255, 0.08);
+  background-color: #f4f6ff;
+  overflow: hidden;
 }
 
-.td-birthday {
-    padding: 6px;
-    color: #000000ff;
-    font-weight: 400;
+.office-card-title {
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  padding: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  backdrop-filter: blur(5px);
 }
 
-.no-birthday-text {
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    font-style: italic;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+.office-card-body {
+  display: flex;
+  font-size: 14px;
+  padding: 10px 14px;
+  justify-content: center;
 }
 
-.file {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    color: #000000;
-    padding-bottom: 7px;
-    font-weight: 500;
-    width: 100%;
+/* Small Cards */
+.office-card-small {
+  border-radius: 16px;
+  border: 1px solid #d6d6d6ff;
+  min-height: 100px;
+  min-width: 280px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-color: #f2f4ff;
 }
 
-.card-title {
-    background-color: white;
-    height: 18px;
-    border-radius: 20px 20px 0 0;
-    padding: 8px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    backdrop-filter: blur(5px);
+.office-card-small {
+  overflow: hidden;
 }
 
-.card-body {
-    display: flex;
-    font-size: 14px;
-    padding: 10px 14px;
-    justify-content: center;
+
+.office-card-small-title {
+  background-color: white;
+  height: 18px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 20px 20px 0 0;
+  padding: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  backdrop-filter: blur(5px);
 }
 
-.card-title-1 {
-    background-color: white;
-    height: 18px;
-    width: 300px;
-    border-radius: 20px 20px 0 0;
-    padding: 8px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    backdrop-filter: blur(5px);
+.office-card-links {
+  border-radius: 16px;
+  border: 1px solid #d6d6d6ff;
+  height: 54px;
+  min-width: 280px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 1.6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background-color: #f2f4ff;
 }
 
-.card-main-1 {
-    border-radius: 16px;
-    border: 1px solid #d6d6d6ff;
-    min-height: 100px;
-    min-width: 300px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-    background-color: #f2f4ff;
+.office-card-links-title {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.cards {
-    border-radius: 16px;
-    border: 1px solid #d6d6d6ff;
-    height: 54px;
-    min-width: 300px;
-    justify-content: center;
-    align-items: "center";
-    display: flex;
-    padding: 1.6px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-    background-color: #f2f4ff;
+.office-card-content {
+  font-size: 14px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+  width: 100%;
 }
 
-.title-card {
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
+.office-file-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: #000000;
+  padding-bottom: 7px;
+  font-weight: 500;
+  text-decoration: none;
+  width: 100%;
 }
 
-.title-card-1 {
-    font-size: 14px;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    margin: 12px;
+.office-file-link a {
+  text-decoration: none;
+  color: #000000;
 }
 
-/* Mobile responsiveness */
+.office-file-link a:hover {
+  text-decoration: underline;
+}
+
+.office-file-link img {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Table Styles */
+.office-table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.office-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: lato, sans-serif;
+  border-radius: 20px;
+}
+
+.office-table td {
+  padding: 7px;
+  color: #000000ff;
+}
+
+.office-table-birthday {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: lato, sans-serif;
+  border-radius: 20px;
+  height: 100%;
+}
+
+.office-table-birthday td {
+  padding: 6px;
+  color: #000000ff;
+  font-weight: 400;
+}
+
+.office-no-birthday {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
-    .home-container {
-        background-size: cover;
-        background-position: center;
-        padding-top: 80px;
-    }
+  .office-topbar {
+    padding: 3px 5px;
+    height: auto;
+    min-height: 50px;
+  }
 
-    .topbar {
-        padding: 10px;
-        height: auto;
-    }
+  .office-logo {
+    height: 40px;
+  }
 
-    .topbar-container-1 {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .office-header-profile {
+    padding: 4px 8px;
+    gap: 6px;
+    margin-right: 0;
+  }
 
-    .topbar-container-2 {
-        width: auto;
-        min-width: 0;
-    }
+  .office-user-name {
+    font-size: 14px;
+    width: auto;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    .header-profile {
-        margin-right: 0;
-        margin-top: 10px;
-    }
+  .office-header-avatar,
+  .office-header-avatar img,
+  .office-header-avatar-fallback {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
 
-    .body-container-main {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 15px;
-        margin: 10px;
-    }
+  .office-body-main {
+    grid-template-columns: 1fr;
+    padding: 0 5px;
+    margin: 15px auto;
+  }
 
-    .body-container {
-        flex-direction: column;
-    }
+  .office-body-right-top {
+    flex-direction: column;
+  }
 
-    .body-container-1 {
-        gap: 15px;
-    }
+  .office-card-title {
+    font-size: 14px;
+    padding: 6px;
+  }
 
-    .body-container-2 {
-        flex-direction: column;
-    }
+  .office-card-body {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
 
-    .body-col-1 {
-        gap: 15px;
-    }
+  .office-card-small {
+    min-width: 100%;
+  }
 
-    .emp-details, .emp-details-3 {
-        width: 100%;
-    }
+  .office-card-links {
+    min-width: 100%;
+    height: auto;
+    min-height: 50px;
+  }
 
-    .card-main-1 {
-        min-width: 100%;
-    }
+  .office-card-links-title {
+    font-size: 14px;
+  }
 
-    .cards {
-        min-width: 100%;
-        height: auto;
-        padding: 10px;
-    }
+  .office-card-small-title {
+    font-size: 14px;
+    max-width: 100%;
+  }
 
-    .card-title-1 {
-        width: 100%;
-    }
+  .office-card-content {
+    font-size: 13px;
+    margin: 10px;
+  }
 
-    .table {
-        font-size: 12px;
-    }
+  .office-table td {
+    padding: 5px;
+    font-size: 12px;
+  }
 
-    .td, .td-birthday {
-        padding: 5px;
-    }
+  .office-table-birthday td {
+    padding: 4px;
+    font-size: 12px;
+  }
 
-    .file {
-        font-size: 12px;
-    }
+  .office-file-link {
+    font-size: 13px;
+  }
 
-    .card-title, .card-title-1 {
-        font-size: 14px;
-    }
+  .office-card,
+  .office-card-small,
+  .office-card-links {
+    box-sizing: border-box;
+  }
 
-    .title-card {
-        font-size: 14px;
-    }
 }
 
 @media (max-width: 480px) {
-    .body-container-main {
-        margin: 5px;
-        gap: 10px;
-    }
+  .office-topbar-container {
+    /* flex-wrap: wrap; */
+    gap: 10px;
+  }
 
-    .emp-details, .emp-details-3 {
-        border-radius: 10px;
-    }
+  .office-logo {
+    height: 35px;
+  }
 
-    .card-main-1, .cards {
-        border-radius: 10px;
-        min-height: 80px;
-    }
+  .office-user-name {
+    font-size: 12px;
+    max-width: 60px;
+  }
 
-    .card-title, .card-title-1 {
-        font-size: 12px;
-        padding: 5px;
-    }
+  .office-header-avatar,
+  .office-header-avatar img,
+  .office-header-avatar-fallback {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
 
-    .card-body {
-        padding: 5px 10px;
-        font-size: 12px;
-    }
+  .office-card-title {
+    font-size: 13px;
+    padding: 5px;
+  }
 
-    .title-card-1 {
-        margin: 8px;
-        font-size: 12px;
-    }
+  .office-card-body {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
 
-    .table, .table-birthday {
-        font-size: 11px;
-    }
+  .office-card-links-title {
+    font-size: 13px;
+  }
 
-    .td, .td-birthday {
-        padding: 3px;
-    }
+  .office-card-small-title {
+    font-size: 13px;
+  }
 
-    .no-birthday-text {
-        font-size: 12px;
-    }
+  .office-card-content {
+    font-size: 12px;
+    margin: 8px;
+  }
 
-    .file {
-        font-size: 11px;
-        gap: 4px;
-    }
+  .office-table td {
+    padding: 4px;
+    font-size: 11px;
+  }
+
+  .office-table-birthday td {
+    padding: 3px;
+    font-size: 11px;
+  }
+
+  .office-file-link {
+    font-size: 12px;
+  }
+
+  .office-file-link img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .office-logo {
+    height: 30px;
+  }
+
+  .office-user-name {
+    display: none;
+  }
+
+  .office-header-profile {
+    padding: 3px 6px;
+  }
+}
+
+
+/* ============================= */
+/* FORCE MOBILE LAYOUT OVERRIDE  */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  /* MAIN WRAPPER */
+  .office-body-main {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* LEFT & RIGHT SECTIONS */
+  .office-body-left,
+  .office-body-right {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  /* RIGHT TOP SPLIT */
+  .office-body-right-top {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* COLUMN FIX */
+  .office-col {
+    width: 100% !important;
+  }
+
+  /* ALL CARDS – FULL WIDTH */
+  .office-card,
+  .office-card-small,
+  .office-card-links {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* REMOVE CENTER ALIGNMENT THAT SQUEEZES UI */
+  .office-body-right-top,
+  .office-col {
+    align-items: stretch !important;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .office-topbar-container {
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  .office-header-profile {
+    margin-left: auto;
+    /* FORCE RIGHT */
+  }
 }
