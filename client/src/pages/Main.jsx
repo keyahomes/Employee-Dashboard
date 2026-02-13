@@ -101,7 +101,7 @@ const styles = {
             rgba(42, 78, 240, 0.1) 0%,
             rgba(118, 75, 162, 0.1) 100%
             ),
-            url("https://keyaspring.in/assets/images/external/g8.webp")
+            url("")
         `,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -151,12 +151,13 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "20vh",
-        minWidth: "100vw",
+        minWidth: "90vw",
         // padding: "0.5rem",
         marginTop: "1rem",
         textAlign: "center",
         position: "relative",
         zIndex: "1",
+        margin: "2px"
     },
 
     heroContent: {
