@@ -122,10 +122,17 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 10px;
+  margin: 15px auto;
+  /* padding: 0 10px; */
   align-items: start;
 }
+
+.office-body-main {
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+
 
 .office-body-left {
   display: flex;
@@ -196,6 +203,11 @@
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
   background-color: #f2f4ff;
 }
+
+.office-card-small {
+  overflow: hidden;
+}
+
 
 .office-card-small-title {
   background-color: white;
@@ -348,7 +360,7 @@
   .office-body-main {
     grid-template-columns: 1fr;
     padding: 0 5px;
-    margin: 10px auto;
+    margin: 15px auto;
   }
 
   .office-body-right-top {
@@ -402,12 +414,19 @@
   .office-file-link {
     font-size: 13px;
   }
+
+  .office-card,
+  .office-card-small,
+  .office-card-links {
+    box-sizing: border-box;
+  }
+
 }
 
 @media (max-width: 480px) {
   .office-topbar-container {
-    flex-wrap: wrap;
-    gap: 5px;
+    /* flex-wrap: wrap; */
+    gap: 10px;
   }
 
   .office-logo {
@@ -481,5 +500,68 @@
 
   .office-header-profile {
     padding: 3px 6px;
+  }
+}
+
+
+/* ============================= */
+/* FORCE MOBILE LAYOUT OVERRIDE  */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  /* MAIN WRAPPER */
+  .office-body-main {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* LEFT & RIGHT SECTIONS */
+  .office-body-left,
+  .office-body-right {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  /* RIGHT TOP SPLIT */
+  .office-body-right-top {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  /* COLUMN FIX */
+  .office-col {
+    width: 100% !important;
+  }
+
+  /* ALL CARDS – FULL WIDTH */
+  .office-card,
+  .office-card-small,
+  .office-card-links {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* REMOVE CENTER ALIGNMENT THAT SQUEEZES UI */
+  .office-body-right-top,
+  .office-col {
+    align-items: stretch !important;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .office-topbar-container {
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  .office-header-profile {
+    margin-left: auto;
+    /* FORCE RIGHT */
   }
 }

@@ -2,7 +2,9 @@ import { useEffect, useState, useRef } from "react";
 
 import { getDatabase, ref, update, onValue, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { UserCog, Info } from "lucide-react";
 
+import "./officeHome.css";
 
 function isValidUrl(str) {
     try {
@@ -24,7 +26,7 @@ function OfficeHome() {
         }
         .scroll-text { animation: scroll-left 20s linear infinite; }
         .scroll-text:hover { animation-play-state: paused !important; cursor: pointer; }
-
+        
         @media (max-width: 768px) {
             .mobile-responsive-grid {
                 grid-template-columns: 1fr !important;
@@ -74,6 +76,7 @@ function OfficeHome() {
     const [showPayslipModal, setShowPayslipModal] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState("");
     const [selectedYear, setSelectedYear] = useState("");
+    const [showPersonalDetailsModal, setShowPersonalDetailsModal] = useState(false);
 
 
     let birthdays = [];
@@ -111,7 +114,8 @@ function OfficeHome() {
         }
 
         try {
-            const res = await fetch("http://localhost:5000/api/payslip", {
+            const API_BASE = "https://api-myt2td5dja-uc.a.run.app";
+            const res = await fetch(`${API_BASE}/generate-payslip`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -149,6 +153,14 @@ function OfficeHome() {
 
     const closeModal = () => {
         setShowPayslipModal(false);
+    };
+
+    const handlePersonalDetailsClick = () => {
+        setShowPersonalDetailsModal(true);
+    };
+
+    const closePersonalDetailsModal = () => {
+        setShowPersonalDetailsModal(false);
     };
 
     useEffect(() => {
@@ -201,14 +213,14 @@ function OfficeHome() {
 
     return (
         <>
-            <div style={styles.homeContainer}>
+            <div className="office-home-container" style={styles.homeContainer}>
 
                 {/*Topbar*/}
                 <div id='topbar' style={styles.topbar}>
-                    <div style={styles.topbarContainer1} className="mobile-responsive-width">
+                    <div className="office-topbar-container" style={styles.topbarContainer1}>
 
                         {/*Keya Logo */}
-                        <div style={styles.topbarContainer2}>
+                        <div className="office-logo-container" style={styles.topbarContainer2}>
                             <img
                                 src="https://keyahomes.co.in/forms/static/media/keya_homes_logo.ae8e4b7c7c37a705231c.webp"
                                 alt="Keya Homes"
@@ -218,7 +230,7 @@ function OfficeHome() {
                         </div>
 
                         {/* User profile & Logout */}
-                        <div style={styles.headerProfile}>
+                        <div className="office-header-profile" style={styles.headerProfile}>
                             <div
                                 style={styles.headerAvatar}
                                 onClick={() => setShowLogout((prev) => !prev)}
@@ -236,7 +248,7 @@ function OfficeHome() {
                                         }}
                                     />
                                 ) : (
-                                    <div style={styles.headerAvatarFallback} className="mobile-responsive-avatar">
+                                    <div style={styles.headerAvatarFallback} className="mobile-responsive-avatar" >
                                         {userData?.Employee_Name?.charAt(0).toUpperCase() || "U"}
                                     </div>
                                 )}
@@ -259,47 +271,29 @@ function OfficeHome() {
                     </div>
                 </div>
 
-                <div style={styles.bodyContainerMain} className="mobile-responsive-grid">
+                <div className="office-body-main" style={styles.bodyContainerMain}>
                     {/*Body Container - left*/}
-                    <div style={styles.bodyContainer}>
+                    <div className="office-body-left" style={styles.bodyContainerLeft}>
 
-                        <div style={styles.bodyCol1}>
+                        <div className="office-col" style={styles.bodyCol1}>
 
-                            {/*Employee Basic Details */}
-                            <div style={styles.empDetails}>
-                                <div style={styles.cardTitle}>
-                                    Employee Basic Details
-                                </div>
-                                <div style={styles.cardBody}>
-                                    <div style={styles.tableWrapper} className="mobile-responsive-table">
-                                        <table style={styles.table}>
-                                            <tbody>
-                                                {summaryRow(1, "DOJ", userData?.DOJ)}
-                                                {summaryRow(2, "DOB", userData?.DOB)}
-                                                {summaryRow(3, "AGE", userData?.Age)}
-                                                {summaryRow(4, "NAME", userData?.Employee_Name)}
-                                                {summaryRow(5, "GENDER", userData?.Gender)}
-                                                {summaryRow(6, "DEPARTMENT", userData?.Department)}
-                                                {summaryRow(7, "REPORTING MANAGER", userData?.Reporting_Manager)}
-                                                {summaryRow(8, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
-                                                {summaryRow(9, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
-                                                {summaryRow(10, "BLOOD GROUP", userData?.Blood_Group)}
-                                                {summaryRow(11, "PERMANENT ADDRESS", userData?.Permanent_Address)}
-                                                {summaryRow(12, "CURRENT ADDRESS", userData?.Current_Address)}
-                                                {summaryRow(13, "PF NUMBER", userData?.PF_Number)}
-                                                {summaryRow(14, "UAN NUMBER", userData?.UAN_Number)}
-                                                {summaryRow(15, "BANK NAME", userData?.Bank_Name)}
-                                                {summaryRow(16, "IFSC CODE", userData?.IFSC_Code)}
-                                                {summaryRow(17, "ACCOUNT NUMBER", userData?.Account_Number)}
-
-                                            </tbody>
-                                        </table>
+                            {/*Personal Details Card */}
+                            <div style={styles.personalDetailsCard}
+                                onClick={handlePersonalDetailsClick}
+                            >
+                                <div style={styles.personalDetailsContent}>
+                                    <UserCog size={48} color="#286be898" strokeWidth={1.5} />
+                                    <div style={styles.personalDetailsTitle}>
+                                        Personal Details
+                                    </div>
+                                    <div style={styles.personalDetailsCardSubHead}>
+                                        click for more info
                                     </div>
                                 </div>
                             </div>
 
                             {/*Leave Details */}
-                            <div style={styles.empDetails}>
+                            <div className="office-card" style={styles.empDetails}>
                                 <div style={styles.cardTitle}>
                                     Leave Details
                                 </div>
@@ -317,22 +311,50 @@ function OfficeHome() {
                                 </div>
                             </div>
 
+                            {/* Task List */}
+                            <div className="office-card" style={styles.taskListCard}>
+                                <div style={styles.cardTitle1}>
+                                    Task List
+                                </div>
+                                <div style={styles.cardBody}>
+                                    <div style={styles.titleCard1}>
+
+                                        {/* General Task */}
+                                        <div style={styles.file}>
+                                            <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
+                                            <a href={userData.General_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                GENERAL TASK
+                                            </a>
+                                        </div>
+
+                                        {/* Department Task */}
+                                        <div style={styles.file}>
+                                            <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
+                                            <a href={userData.Department_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
+                                                DEPARTMENT TASK
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
                     {/* Body Container - Right */}
-                    <div style={styles.bodyContainer1}>
+                    <div className="office-body-right" style={styles.bodyContainerRight}>
 
                         {/* Right Top */}
-                        <div style={styles.bodyContainer}>
+                        <div style={styles.bodyContainerLeft}>
 
-                            <div style={styles.bodyContainer2} className="mobile-responsive-flex">
+                            <div className="office-body-right-top" style={styles.bodyContainer2}>
 
                                 {/* Middle Column */}
                                 <div style={styles.bodyCol1}>
 
                                     {/*Learning and Development Details */}
-                                    <div style={styles.cardMain1}>
+                                    <div className="office-card-small" style={styles.learningAndDevelopmentCard}>
                                         <div style={styles.cardTitle1}>
                                             Learning and Development
                                         </div>
@@ -341,7 +363,7 @@ function OfficeHome() {
 
                                                 {/* FAQ  */}
                                                 <div style={styles.file}>
-                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                     <a href={userData.FAQ} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                         FAQ
                                                     </a>
@@ -349,23 +371,15 @@ function OfficeHome() {
 
                                                 {/* SOP's */}
                                                 <div style={styles.file}>
-                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                     <a href={userData.SOPs} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                         SOP's
                                                     </a>
                                                 </div>
 
-                                                {/* Task List */}
-                                                {/* <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                <a href={userData.Task_List} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                    Task List
-                                                </a>
-                                            </div> */}
-
                                                 {/* Training Video */}
                                                 <div style={styles.file}>
-                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                     <a href={userData.Training_Videos} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                                         Training Video
                                                     </a>
@@ -375,58 +389,30 @@ function OfficeHome() {
                                         </div>
                                     </div>
 
-                                    {/*Task List */}
-                                    <div style={styles.cardMain1}>
-                                        <div style={styles.cardTitle1}>
-                                            Task List
-                                        </div>
-                                        <div style={styles.cardBody}>
-                                            <div style={styles.titleCard1}>
-
-                                                {/* General Task */}
-                                                <div style={styles.file}>
-                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                    <a href={userData.General_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                        GENERAL TASK
-                                                    </a>
-                                                </div>
-
-                                                {/* Department Task */}
-                                                <div style={styles.file}>
-                                                    <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
-                                                    <a href={userData.Department_Task} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
-                                                        DEPARTMENT TASK
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     {/*Application Cards */}
-                                    <div style={styles.cardMain1}>
+                                    <div style={styles.applicationCard}>
                                         <div style={styles.titleCard1}>
 
                                             {/* Form 16 */}
                                             <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                 <a href={userData.Form_16} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                                     Apply for Form16
                                                 </a>
                                             </div>
 
                                             {/* Payslip Card */}
-                                            <div
-                                                style={styles.file}
+                                            <div style={styles.file}
                                                 onClick={handlePayslipClick}
                                             >
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                 <span>Generate Payslip</span>
                                             </div>
 
                                             {/* Employment letter */}
                                             <div style={styles.file}>
-                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="18" />
+                                                <img src="https://img.icons8.com/?size=100&id=1395&format=png&color=000000" width="16" />
                                                 <a href={userData.Employment_Letter} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }} >
                                                     Employment Letter
                                                 </a>
@@ -435,14 +421,13 @@ function OfficeHome() {
                                         </div>
                                     </div>
 
-
                                 </div>
 
                                 {/*Right Column - Links card */}
-                                <div style={styles.bodyCol1}>
+                                <div style={styles.rightCol}>
 
                                     {/*Holiday List Card */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Holiday_List_2026} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Holiday List - 2026
@@ -451,7 +436,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*Employment Policy Card */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Employment_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Employment Policy
@@ -460,7 +445,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*Dress Code Card */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Dress_Code} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Dress Code
@@ -469,7 +454,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*Insurance Details Card */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Insurance_Details} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Insurance Details
@@ -478,7 +463,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*PF Website */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.PF_Website} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 PF Website
@@ -487,7 +472,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*Usage of Phone Card */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Mobile_Usage_Policy} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Usage of Phone
@@ -496,7 +481,7 @@ function OfficeHome() {
                                     </div>
 
                                     {/*Keya Update */}
-                                    <div style={styles.cards}>
+                                    <div className="office-card-links" style={styles.cards}>
                                         <div style={styles.titleCard}>
                                             <a href={userData.Keya_Update} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                                                 Keya Update
@@ -504,24 +489,24 @@ function OfficeHome() {
                                         </div>
                                     </div>
 
-                                    
+
 
                                 </div>
                             </div>
                         </div>
 
                         {/* Birthday  */}
-                        <div style={styles.empDetails3}>
+                        <div className="office-card" style={styles.birthdayCard}>
                             <div style={styles.cardTitle}>
                                 Current Month Birthdays
                             </div>
-                            <div style={{...styles.cardBody, justifyContent: "flex-start", alignItems: "flex-start"}}>
+                            <div style={{ ...styles.cardBody, justifyContent: "flex-start", alignItems: "flex-start" }}>
                                 {birthdays.length === 0 ? (
                                     <div style={styles.noBirthdayText}>
                                         Keya has no birthdays this month
                                     </div>
                                 ) : (
-                                    <div style={styles.tableWrapperBirthday} className="mobile-responsive-table">
+                                    <div style={styles.tableWrapperBirthday} >
                                         <table style={styles.tableBirthday}>
                                             <tbody>
                                                 {tableHeaderRow()}
@@ -589,6 +574,45 @@ function OfficeHome() {
                     </div>
                 </div>
             )}
+
+            {/* Personal Details Modal */}
+            {showPersonalDetailsModal && (
+                <div style={styles.modalOverlay} onClick={closePersonalDetailsModal}>
+                    <div style={styles.modalContentLarge} onClick={(e) => e.stopPropagation()}>
+                        <div style={styles.modalHeader}>
+                            <h3 style={styles.modalTitle}>Personal Details</h3>
+                            <button style={styles.closeButton} onClick={closePersonalDetailsModal}>
+                                &times;
+                            </button>
+                        </div>
+                        <div style={styles.modalBodyScroll}>
+                            <div style={styles.tableWrapper}>
+                                <table style={styles.tableModal}>
+                                    <tbody>
+                                        {summaryRow(1, "DOJ", userData?.DOJ)}
+                                        {summaryRow(2, "DOB", userData?.DOB)}
+                                        {summaryRow(3, "AGE", userData?.Age)}
+                                        {summaryRow(4, "NAME", userData?.Employee_Name)}
+                                        {summaryRow(5, "GENDER", userData?.Gender)}
+                                        {summaryRow(6, "DEPARTMENT", userData?.Department)}
+                                        {summaryRow(7, "REPORTING MANAGER", userData?.Reporting_Manager)}
+                                        {summaryRow(8, "EMERGENCY CONTACT 1", userData?.Emergency_Contact_No_1)}
+                                        {summaryRow(9, "EMERGENCY CONTACT 2", userData?.Emergency_Contact_No_2)}
+                                        {summaryRow(10, "BLOOD GROUP", userData?.Blood_Group)}
+                                        {summaryRow(11, "PERMANENT ADDRESS", userData?.Permanent_Address)}
+                                        {summaryRow(12, "CURRENT ADDRESS", userData?.Current_Address)}
+                                        {summaryRow(13, "PF NUMBER", userData?.PF_Number)}
+                                        {summaryRow(14, "UAN NUMBER", userData?.UAN_Number)}
+                                        {summaryRow(15, "BANK NAME", userData?.Bank_Name)}
+                                        {summaryRow(16, "IFSC CODE", userData?.IFSC_Code)}
+                                        {summaryRow(17, "ACCOUNT NUMBER", userData?.Account_Number)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
@@ -640,7 +664,7 @@ const styles = {
 
     headerProfile: {
         position: "relative",
-        marginRight: "60px",
+        marginRight: "50px",
         display: "flex",
         flexDirection: "row",
         border: "1px solid #286be898",
@@ -692,32 +716,35 @@ const styles = {
     },
 
     bodyContainerMain: {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gridTemplateRows: "auto 1fr",   // ⭐ THIS FORCES EQUAL BOTTOM
+        display: "flex",
         gap: "10px",
         maxWidth: "1200px",
-        margin: "20px auto",
+        margin: "50px auto",
         alignItems: "stretch",
     },
 
-    bodyContainer: {
+
+    bodyContainerLeft: {
         display: "flex",
         gap: "10px",
         justifyContent: "center",
         height: "100%",
+        flexDirection: "column",
+        flex: "1",
+        // backgroundColor:"green"
     },
 
-    bodyContainer1: {
+    bodyContainerRight: {
         display: "flex",
         flexDirection: "column",
         gap: "10px",
         height: "100%",
+        flex: "1",
     },
 
     bodyContainer2: {
         display: "flex",
-        gap: "10px",
+        gap: "13px",
         justifyContent: "center",
     },
 
@@ -728,38 +755,76 @@ const styles = {
         height: "100%",
     },
 
+    personalDetailsCard: {
+        display: "flex",
+        flexDirection: "column",
+        border: "1px solid #d6d6d6ff",
+        borderRadius: "20px",
+        minHeight: "160px",
+        width: "100%",
+        boxShadow: "0 8px 18px rgba(228, 182, 255, 0.08)",
+        backgroundColor: "#f4f6ff",
+        flexGrow: 1,
+        justifyContent: "center",
+    },
+
+    // Leave details card
     empDetails: {
         display: "flex",
         flexDirection: "column",
         border: "1px solid #d6d6d6ff",
         borderRadius: "20px",
-        height: "100%",
+        maxHeight: "150px",
         width: "100%",
         boxShadow: "0 8px 18px rgba(228, 182, 255, 0.08)",
         backgroundColor: "#f4f6ff",
         flexGrow: 1,
-
+        // width: "550px",
     },
 
-    empDetails2: {
+    taskListCard: {
         display: "flex",
         flexDirection: "column",
         border: "1px solid #d6d6d6ff",
         borderRadius: "20px",
-        height: "100%",
+        minHeight: "120px",
         width: "100%",
         boxShadow: "0 8px 18px rgba(228, 182, 255, 0.08)",
         backgroundColor: "#f4f6ff",
-        // margin: "0px 23px",
+        flexGrow: 1,
+        // width: "550px",
     },
 
-    empDetails3: {
+    // Learning And Development Card
+    learningAndDevelopmentCard: {
+        display: "flex",
+        flexDirection: "column",
+        border: "1px solid #d6d6d6ff",
+        borderRadius: "20px",
+        minHeight: "160px",
+        width: "100%",
+        boxShadow: "0 8px 18px rgba(228, 182, 255, 0.08)",
+        backgroundColor: "#f4f6ff",
+        flexGrow: 1,
+        // width: "550px",
+    },
+
+    rightCol: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "5px",
+        height: "100%",
+    },
+
+    // Birthday card
+    birthdayCard: {
         display: "flex",
         flexDirection: "column",
         border: "1px solid #d6d6d6ff",
         borderRadius: "20px",
         height: "100%",
         width: "100%",
+        // width: "628px",
         boxShadow: "0 8px 18px rgba(228, 182, 255, 0.08)",
         backgroundColor: "#f4f6ff",
         flexGrow: 1,
@@ -833,7 +898,7 @@ const styles = {
 
     cardTitle: {
         backgroundColor: "white",
-        height: "18px",
+        height: "20px",
         borderRadius: "20px 20px 0 0",
         padding: "6px",
         textAlign: "center",
@@ -845,7 +910,7 @@ const styles = {
 
     cardBody: {
         display: "flex",
-        fontSize: "12px",
+        fontSize: "11px",
         padding: "8px 10px",
         justifyContent: "center",
         flexGrow: 1,
@@ -854,22 +919,22 @@ const styles = {
 
     cardTitle1: {
         backgroundColor: "white",
-        height: "18px",
-        width: "300px",
-        borderRadius: "20px 20px 0 0",
-        padding: "6px",
+        width: "100%",          // ✅ FIX
+        borderRadius: "16px 16px 0 0",
+        padding: "8px",
         textAlign: "center",
         fontSize: "14px",
         fontWeight: "700",
-        textTransform: "Uppercase",
-        backdropFilter: "blur(5px)",
+        textTransform: "uppercase",
     },
 
-    cardMain1: {
+    // Application Card 
+    applicationCard: {
         borderRadius: "16px",
         border: "1px solid #d6d6d6ff",
-        minHeight: "85px",
-        minWidth: "300px",
+        minHeight: "140px",
+        // minWidth: "300px",
+        width: "100%",
         justifyContent: "flex-start",
         alignItems: "center",
         display: "flex",
@@ -882,12 +947,12 @@ const styles = {
     cards: {
         borderRadius: "16px",
         border: "1px solid #d6d6d6ff",
-        height: "48px",
-        minWidth: "300px",
+        maxHeight: "36px",
+        width: "100%",
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        padding: "1.6px",
+        padding: "1.4px",
         boxShadow: "0 6px 14px rgba(0,0,0,0.06)",
         backgroundColor: "#f2f4ff"
 
@@ -907,19 +972,20 @@ const styles = {
     },
 
     titleCard: {
-        fontSize: "14px",
+        fontSize: "12px",
         fontWeight: "600",
         textTransform: "Uppercase",
     },
 
     titleCard1: {
-        fontSize: "12px",
+        fontSize: "11px",
         textTransform: "Uppercase",
         display: "flex",
         flexDirection: "column",
         margin: "8px",
-        gap: "8px",
+        gap: "12px",
         justifyContent: "center",
+        alignItems: "center",
         flexGrow: 1,
     },
 
@@ -1047,6 +1113,99 @@ const styles = {
         transform: "translateY(-1px)",
         boxShadow: "0 4px 12px rgba(40, 107, 232, 0.3)",
     },
+
+    // Personal Details Card Styles
+    personalDetailsCard1: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1px solid #d6d6d6ff",
+        borderRadius: "16px",
+        padding: "12px 20px",
+        backgroundColor: "#f2f4ff",
+        boxShadow: "0 6px 14px rgba(0,0,0,0.06)",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        minHeight: "150px",
+        width: "100%",
+        // maxWidth: "510px",
+        position: "relative",
+    },
+
+    personalDetailsContent: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "12px",
+        width: "100%",
+    },
+
+    personalDetailsTitle: {
+        fontSize: "14px",
+        fontWeight: "600",
+        color: "#000",
+        textTransform: "uppercase",
+        textAlign: "center",
+
+    },
+
+    personalDetailsCardSubHead: {
+        paddingTop: "0px",
+        fontSize: "12px",
+    },
+
+    infoIconContainer: {
+        position: "absolute",
+        top: "12px",
+        right: "12px",
+        cursor: "help",
+        zIndex: 10,
+    },
+
+    infoTooltip: {
+        position: "absolute",
+        top: "30px",
+        right: "0",
+        backgroundColor: "#fff",
+        border: "1px solid #d6d6d6ff",
+        borderRadius: "8px",
+        padding: "10px 12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+        fontSize: "11px",
+        color: "#333",
+        width: "220px",
+        lineHeight: "1.4",
+        zIndex: 1000,
+        whiteSpace: "normal",
+    },
+
+    // Modal Content Large for Personal Details
+    modalContentLarge: {
+        backgroundColor: "#fff",
+        borderRadius: "16px",
+        width: "100%",
+        maxWidth: "700px",
+        maxHeight: "85vh",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+        display: "flex",
+        flexDirection: "column",
+    },
+
+    modalBodyScroll: {
+        padding: "16px",
+        overflowY: "auto",
+        maxHeight: "70vh",
+    },
+
+    // Table for Modal with 12px font size
+    tableModal: {
+        width: "100%",
+        borderCollapse: "collapse",
+        fontFamily: "lato",
+        borderRadius: "20px",
+        fontSize: "12px",
+    },
 };
 
 
@@ -1084,9 +1243,9 @@ const summaryRow = (index, label, value = false) => {
             key={index}
             style={{ backgroundColor: index % 2 === 0 ? "#0c5bef1a" : "#5488e831" }}
         >
-            <td style={styles.td} className="mobile-responsive-font">{index}</td>
-            <td style={styles.td} className="mobile-responsive-font">{label}</td>
-            <td style={styles.td} className="mobile-responsive-font">
+            <td style={styles.td}>{index}</td>
+            <td style={styles.td}>{label}</td>
+            <td style={styles.td}>
                 {isLink ? (
                     <a
                         href={value}
@@ -1135,4 +1294,3 @@ const tableHeaderRow = () => (
 );
 
 export default OfficeHome;
-
